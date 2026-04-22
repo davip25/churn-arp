@@ -22,6 +22,7 @@ data/*
 # Keep the folder structure by allowing .gitkeep files
 !data/.gitkeep
 
+
 # Specific heavy data files
 *.zip
 *.csv
