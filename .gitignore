@@ -37,6 +37,7 @@ data/*
 *.h5
 *.model
 models/
+!models/.gitkeep
 
 # --- Security (Environment Variables) ---
 .env
