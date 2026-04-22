@@ -1,0 +1,48 @@
+# --- Python & Jupyter ---
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+# Optional: Uncomment the next line if you don't want to track notebooks at all
+# *.ipynb
+
+# --- Virtual Environments (NEVER TRACK) ---
+.venv/
+venv/
+env/
+ENV/
+bin/
+lib/
+include/
+share/
+
+# --- Data (Security & Storage Management) ---
+# Ignore all data content but keep the folder structure
+data/*
+# Keep the folder structure by allowing .gitkeep files
+!data/.gitkeep
+
+# Specific heavy data files
+*.zip
+*.csv
+*.parquet
+*.json
+*.sql
+*.xls*
+
+# --- Models & Artifacts ---
+*.pkl
+*.joblib
+*.h5
+*.model
+models/
+
+# --- Security (Environment Variables) ---
+.env
+.flaskenv
+
+# --- IDEs & System ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

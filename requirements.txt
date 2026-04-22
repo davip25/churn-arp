@@ -1,0 +1,63 @@
+# =========================================================
+# ARP: Agentic Retention Platform - Dependencies
+# =========================================================
+
+# --- 1. PROCESAMIENTO Y AUDITORÍA DE DATOS ---
+# Manipulación de tablas y cálculos numéricos
+pandas==2.2.1
+numpy==1.26.4
+# Generación de reportes automáticos de calidad de datos
+ydata-profiling>=4.12.0
+# Visualización de datos y gráficos estadísticos
+matplotlib==3.8.3
+seaborn==0.13.2
+# Lectura y escritura de archivos Excel (.xlsx)
+openpyxl==3.1.2
+# Manejo de archivos de configuración y Data Contracts (.yaml)
+pyyaml==6.0.1
+
+# --- 2. MACHINE LEARNING (CHURN MODEL) ---
+# Herramientas de pre-procesamiento y métricas de ML
+scikit-learn==1.4.1.post1
+# Algoritmo principal para predecir la fuga de clientes
+xgboost==2.0.3
+# Explicabilidad: indica por qué el modelo predice riesgo de churn
+shap==0.45.0
+# Guardar y cargar el modelo entrenado (.pkl)
+joblib==1.3.2
+# Monitoreo de Data Drift (cambios en el comportamiento de datos)
+evidently==0.4.18
+
+# --- 3. ORQUESTACIÓN AGÉNTICA (IA & LLM) ---
+# Framework base para conectar LLMs con herramientas
+langchain>=0.2.0
+# Integración específica para usar Google Gemini
+langchain-google-genai>=1.0.0
+# Conector para modelos de OpenAI / Azure OpenAI
+langchain-openai>=0.1.0
+# Orquestador de estados y flujos lógicos del agente
+langgraph>=0.2.0
+# Validación de esquemas y ejecución de Data Contracts
+pydantic>=2.6.3 
+
+# --- 4. BASE VECTORIAL Y RAG (MEMORIA DEL AGENTE) ---
+# Base de datos vectorial para búsqueda semántica local
+chromadb>=0.5.0
+# Herramientas de comunidad para integraciones de LangChain
+langchain-community>=0.2.0
+# Modelos para convertir texto en vectores numéricos (embeddings)
+sentence-transformers>=3.0.0
+# Uso de modelos de HuggingFace dentro de LangChain
+langchain-huggingface>=0.0.1
+
+# --- 5. INFRAESTRUCTURA Y DESPLIEGUE ---
+# Creación del Backend / API para la plataforma
+fastapi==0.110.0
+# Servidor de alto rendimiento para ejecutar FastAPI
+uvicorn==0.27.1
+# Carga de variables de entorno y API Keys desde archivo .env
+python-dotenv==1.0.1
+# Framework para el Dashboard / Interfaz de usuario (Frontend)
+streamlit==1.32.2
+# Almacenamiento de archivos y modelos en la nube de Azure
+azure-storage-blob==12.19.1
