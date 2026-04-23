@@ -36,7 +36,7 @@ data/*
 *.joblib
 *.h5
 *.model
-models/
+models/*
 !models/.gitkeep
 
 # --- Security (Environment Variables) ---
