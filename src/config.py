@@ -18,6 +18,8 @@ class Settings(BaseSettings):
     PROCESSED_DATA_DIR: Path = DATA_DIR / "processed"
     EXTERNAL_DATA_DIR: Path = DATA_DIR / "external"
     MODELS_DIR: Path = PROJECT_ROOT / "models"
+    HOLDOUT_RAW_PATH: Path = INTERIM_DATA_DIR / "holdout_raw.csv"
+    DEV_CLEANED_PATH: Path = INTERIM_DATA_DIR / "dev_cleaned.csv"
     
     # 2. Environment Variables and Secrets
     ENVIRONMET: str = Field(default="development")
@@ -27,7 +29,8 @@ class Settings(BaseSettings):
     
     # 4. Data Structure(For Ingestion)
     COLUMNS_TO_DROP: list[str] = ["Country", 'State', 'City', 'Zip Code', 'Total Revenue', 'Satisfaction Score', 'Quarter', 'Churn Score', 'Customer Status', 'Churn Category', 'Churn Reason']
-    TARGET_COLUMN: str = 'Churn Label'
+    TARGET_COLUMN_RAW: str = 'Churn Label'
+    TARGET_COLUMN_CLEAN: str = 'churn_label'
     
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

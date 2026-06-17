@@ -86,12 +86,12 @@ def isolate_holdout(
             df,
             test_size=holdout_size,
             random_state=random_state,
-            stratify=df[config.TARGET_COLUMN]
+            stratify=df[config.TARGET_COLUMN_RAW]
         )
         
         # 2. The base directory is created if it does not exist, based on the provided path.
         os.makedirs(os.path.dirname(config.INTERIM_DATA_DIR), exist_ok=True)
-        df_holdout.to_csv(f"{config.INTERIM_DATA_DIR}/holdot_raw.csv", index=False)
+        df_holdout.to_csv(config.HOLDOUT_RAW_PATH, index=False)
         
         logging.info(f"The Holdout set ({(holdout_size * 100):.0f}%) locked at: {config.INTERIM_DATA_DIR}")
         logging.info(f"Development Set ({(1 - holdout_size) * 100:.0f}%) ready: {df_dev.shape[0]} rows.")
@@ -235,7 +235,7 @@ def trim_string_columns(
     
 def prepare_target_variable(
     df: pd.DataFrame,
-    target_col: str=config.TARGET_COLUMN
+    target_col: str=config.TARGET_COLUMN_CLEAN
 ) -> Optional[pd.DataFrame]:
     """
     Prepares target variable by dropping NaNs, standardizing text, 
@@ -295,3 +295,46 @@ def prepare_target_variable(
         raise
 
 
+def run_data_pipeline() -> bool:
+    """
+    Orchestrate the phase 1 Data Pipeline.
+    Loads data -> Standardizes Names -> Isolate Holdout -> Cleans Dev Data -> Save to Disk.
+    """
+    logging.info("--- Starting Data Engineering Pipeline (Phase 1) ---")
+    
+    # 1. Load Data
+    df_raw = load_raw_data()
+    if df_raw is None:
+        return False
+    
+    # 2. Isolate Holdout
+    df_dev = isolate_holdout(df_raw, holdout_output_path=config.HOLDOUT_RAW_PATH)
+    if df_dev is None:
+        return False
+    
+    # 3. Deep cleaning Only for develomment set (90%)
+    df_dev_cleaned = clean_structural_data(df_dev)
+    df_dev_cleaned = trim_string_columns(df_dev_cleaned)
+    
+    # 4. Prepare Target Variable
+    # Explicitly passing the clean target name
+    df_dev_cleaned = prepare_target_variable(df_dev_cleaned, target_col=config.TARGET_COLUMN_CLEAN)
+    
+    if df_dev_cleaned is None:
+        logging.error("Failed to clean the development set.")
+        return False
+    
+    # 5. Save the processed data for Notebook 2
+    # Using the path from config.py
+    df_dev_cleaned.to_csv(config.DEV_CLEANED_PATH, index=False)
+    logging.info(f"Phase 1 Completed. Development file saved at: {config.DEV_CLEANED_PATH}")
+    return True
+
+if __name__ == "__main__":
+    # This block allows the file to be executed directly from the terminal
+    success = run_data_pipeline()
+    if success:
+        logging.info("Pipeline executed successfully.")
+    else:
+        logging.error("Pipeline failed.")
+    
