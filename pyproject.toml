@@ -1,0 +1,11 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "churn_project"
+version = "0.1.0"
+description = "Telecom Churn Prediction Architecture"
+
+[tool.setuptools]
+packages = ["src"]
